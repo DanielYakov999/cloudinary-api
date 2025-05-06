@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: cloudinary-api
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: CLOUDINARY_SECRET
+        fromDotEnv: true
+      - key: CLOUDINARY_API_KEY
+        fromDotEnv: true
+      - key: CLOUDINARY_CLOUD_NAME
+        fromDotEnv: true
