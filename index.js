@@ -18,8 +18,11 @@ app.post("/get-signature", (req, res) => {
   const context = req.body.context || "general";
   const folder = `uploads/${context}`;
 
-  const paramsToSign = `folder=${folder}&timestamp=${timestamp}${process.env.CLOUDINARY_SECRET}`;
-  const signature = crypto.createHash("sha1").update(paramsToSign).digest("hex");
+  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
+  const signature = crypto
+    .createHash("sha1")
+    .update(paramsToSign + process.env.CLOUDINARY_SECRET)
+    .digest("hex");
 
   res.json({
     timestamp,
@@ -29,6 +32,7 @@ app.post("/get-signature", (req, res) => {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME,
   });
 });
+
 
 // 🗑️ מחיקת תמונה לפי publicId
 app.post("/delete-image", async (req, res) => {
